@@ -9,8 +9,8 @@ public class Spawner : MonoBehaviour
     public GameObject point2;
     public GameObject point3;
     public GameObject point4;
-    public GameObject[] trashes = new GameObject[4];
-    public int timeBetweenSpawns = 1;
+    public GameObject[] trashes = new GameObject[8];
+    public float timeBetweenSpawns = 1;
     private Vector2[] spawnPoints;
     void Start()
     {
@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour
     }
     private GameObject ChooseTrash()
     {
-        int trashNr = UnityEngine.Random.Range(0, 4);
+        int trashNr = UnityEngine.Random.Range(0, 8);
         return trashes[trashNr];
     }
     private Vector2 ChooseLine()
