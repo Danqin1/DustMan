@@ -5,6 +5,7 @@ public class Obstacle : MonoBehaviour
 {
     private GameController gameController;
     private Spawner spawner;
+    private SoundManager soundManager;
     public float speed = 1f;
     Vector2 target;
     public bool hold = false;
@@ -12,6 +13,7 @@ public class Obstacle : MonoBehaviour
     private void Start()
     {
         gameController = FindObjectOfType<GameController>();
+        soundManager = FindObjectOfType<SoundManager>();
         spawner = FindObjectOfType<Spawner>();
         this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
     }
@@ -40,9 +42,11 @@ public class Obstacle : MonoBehaviour
         {
             gameController.score++;
             gameController.SpawnStar(this.gameObject.transform.position);
-            if (spawner.timeBetweenSpawns > 0.5f)
+            if (spawner.timeBetweenSpawns > 0.6f)
             {
-                spawner.timeBetweenSpawns -= 0.05f;
+                spawner.timeBetweenSpawns -= 0.02f;
+                collision.gameObject.GetComponent<Animator>().Play("GoodTrash");
+                soundManager.PlayGood();
             }
         }else if(thisTag[this.tag.Length-1] != collision.gameObject.tag[collision.gameObject.tag.Length-1])
         {
@@ -50,9 +54,12 @@ public class Obstacle : MonoBehaviour
             {
                 gameController.score--;
             }
+            collision.gameObject.GetComponent<Animator>().Play("WrongTrash");
+            soundManager.PlayBad();
         }
-        if (collision.collider.gameObject.tag != "RedTrash" || collision.collider.gameObject.tag != "BlueTrash" || collision.collider.gameObject.tag != "YellowTrash" || collision.collider.gameObject.tag != "GreenTrash")
+        if (collision.collider.gameObject.tag != "RedTrash" && collision.collider.gameObject.tag != "BlueTrash" && collision.collider.gameObject.tag != "YellowTrash" && collision.collider.gameObject.tag != "GreenTrash")
         {
+            
             Destroy(this.gameObject);
         }
     }

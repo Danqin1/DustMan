@@ -23,6 +23,6 @@ public class UIManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("HighScore", gameController.score);
         }
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 }
